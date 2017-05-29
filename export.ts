@@ -1,0 +1,1 @@
+export * from './src/app/translate-g7/translate-g7.service';
