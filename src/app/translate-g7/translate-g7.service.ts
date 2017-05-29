@@ -23,6 +23,7 @@ export class TranslateG7Service {
   private defaultEnUsTranslation: any;
   private defaultEsEsTranslation: any;
   private defaultPtBrTranslation: any;
+  private defaultUsedLanguage: string = 'pt_BR';
 
   constructor(private translateService: TranslateService, private http: Http) {
   }
@@ -39,10 +40,18 @@ export class TranslateG7Service {
     this.defaultPtBrTranslation = defaultPtBrTranslation;
   }
 
+  setDefaultUsedLanguage(defaultUsedLanguage: string) {
+    this.defaultUsedLanguage = defaultUsedLanguage;
+  }
+
   /**
    * Setup local and external translations
    */
   configTranslation() {
+    if (!this.defaultEnUsTranslation) this.defaultEnUsTranslation = {};
+    if (!this.defaultPtBrTranslation) this.defaultPtBrTranslation = {};
+    if (!this.defaultEsEsTranslation) this.defaultEsEsTranslation = {};
+
     //Merge front-end default translation with g7 platform translations
     Object.assign(this.defaultEnUsTranslation, this.getTranslationFromPortal('en_US'));
     Object.assign(this.defaultPtBrTranslation, this.getTranslationFromPortal('pt_BR'));
@@ -58,7 +67,7 @@ export class TranslateG7Service {
     this.translateService.setDefaultLang('pt_BR');
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.translateService.use('pt_BR'); //TODO: waiting when pcbnu002050 gets updated(23/05) so the locale g7 services will be available
+    this.translateService.use(this.defaultUsedLanguage); //TODO: waiting when pcbnu002050 gets updated(23/05) so the locale g7 services will be available
   }
 
   /**
